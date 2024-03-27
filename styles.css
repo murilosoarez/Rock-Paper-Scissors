@@ -4,29 +4,33 @@
     box-sizing: border-box;
 }
 
+
 .Container {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-image: url('/images/grid.jpg') ;
     height: 100vh;
     width: 100vw;
     padding: 5%;
     gap: 2%;
     position: relative;
     border: 2px solid black;
+    font-family: Tahoma;
 }
 
 .Title {
     display: flex;
     justify-content: center;
-    border: 2px solid black;
-    width: 50%;
+    width: 100%;
+    background: rgb(43, 43, 43);
+    color: white;
+    box-shadow: 5px 5px rgb(98, 245, 255);
 }
 
 .Game {
     display: flex;
     position: relative;
-    border: 2px solid black;
     width: 90%;
     height: 100%;
 }
@@ -39,18 +43,19 @@
     justify-content: center;
     gap: 5%;
     flex: 0.5;
-    border: 2px solid red;
+    border: 2px solid rgb(98, 245, 255);
+    background: rgb(43, 43, 43);
 }
 
-.Game .Player.Side #player,
-.Game .Opponent.Side #opponent {
+.Game .Play {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 150px;
-    border: 2px solid black;
     width: 80%;
     height: 40%;
+    font-size: 150px;
+    border: 2px solid black;
+    border: 2px solid rgb(98, 245, 255);
 }
 
 .Game .Player.Side .Score,
@@ -61,6 +66,10 @@
     border: 1px solid black;
     width: 20%;
     height: 10%;
+    font-size: 25px;
+    font-weight: bolder;
+    border: 2px solid rgb(98, 245, 255);
+    color: white;
 }
 
 .Result {
@@ -68,11 +77,12 @@
     align-items: center;
     justify-content: center;
     position: absolute;
+    font-size: 30px;
     width: 50%;
     height: 10%;
     bottom: 12%;
-    border: 2px solid black;
-    background: white;
+    border: 1px solid black;
+    background: rgb(37, 240, 255);
 }
 
 dialog {
@@ -85,7 +95,9 @@ dialog {
     bottom: 0%;
     top: 25%;
     margin: 0 auto;
-    border: 2px solid black;
+    background: rgb(40, 40, 40);
+    border: 2px solid rgb(98, 245, 255);
+    color: white;
 }
 
 dialog > .Options {
@@ -97,12 +109,19 @@ dialog > .Options {
     width: 90%;
     height: 70%;
     border: 2px solid black;
+    border: 2px solid rgb(98, 245, 255);
 }
 
 dialog > .Options > button {
-    border: 2px solid black;
     width: 200px;
     height: 200px;
     font-size: 50px;
     background: none;
+    border: 2px solid rgb(98, 245, 255);
+}
+
+
+dialog > .Options > button:hover {
+    background: black;
+    cursor: pointer;
 }

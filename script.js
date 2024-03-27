@@ -1,15 +1,32 @@
 
-function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
-}
-
 function restartPage(dialogOpen, dialog, main) {
 
     if ((dialogOpen)) {
         dialog.style.opacity = '1'
         main.style.filter = 'blur(5px)'
     }
+
+
     
+}
+
+class Player {
+
+    plays = ['rock', 'paper', 'scissor']
+    points = 0
+
+    constructor(player) {
+        this.player = player 
+    }
+
+    incrementPoints() {
+        return this.points ++
+    }
+
+    randomizePlay(max) {
+        return this.plays[Math.floor(Math.random() * max)]
+    }
+
 }
 
 document.addEventListener('DOMContentLoaded',() => {
@@ -21,18 +38,14 @@ document.addEventListener('DOMContentLoaded',() => {
     let buttons = document.querySelectorAll('button')
     let result = document.getElementById('result')
     
-    let plays = ['rock', 'paper', 'scissors']
     let Score = document.getElementsByClassName('Score')
     
-    let playerContainer = document.getElementById('player')
-
-    let playerScore = 0
-    let opponentScore = 0
+    let player = new Player(document.getElementById('player'))
+    let opponent = new Player(document.getElementById('opponent'))
     
+    let playContainers = document.getElementsByClassName('Play')
+
     restartPage(dialogOpen, dialog, main)
-    
-    let opponentContainer = document.getElementById('opponent')
-
 
     buttons.forEach((button) => {
         button.addEventListener('click', (event) => {
@@ -46,56 +59,46 @@ document.addEventListener('DOMContentLoaded',() => {
             dialogOpen = false;
             dialog.style.opacity = '0'
             main.style.filter = 'blur(0px)'
-        }
-        
-        playerResult = event.target.id 
-        opponentResult = sortOpponent(plays)
-
-        playerContainer.innerHTML = event.target.innerHTML
-        opponentContainer.innerHTML = document.getElementById(opponentResult).innerHTML
-        
-        getResult(playerResult, opponentResult)
-
-        dialogOpen = true
-
-        if (playerScore == 5 || opponentScore == 5) {
-            result.style.color = 'red'
-            if (playerScore == 5) {result.innerHTML = "<h1> Player wins! </h1>"}
-            if (opponentScore == 5) {opponentScore.innerHTML = "<h1> Player wins! </h1>"}
         } 
+
+        // Gets the play ID (is it rock, paper or scissors?)
+        playerPlay = event.target.id 
+        opponentPlay = document.getElementById(opponent.randomizePlay(2))
+
+        playContainers[0].innerHTML = (event.target.innerHTML)
+        playContainers[1].innerHTML = (opponentPlay.innerHTML)
+
+        if (player.points === 5 || opponent.points === 5) {
+            result.style.color = 'red'
+            if (player.points == 5) { result.innerHTML = 'Player 1 won!'}
+            if (opponent.points == 5) { result.innerHTML = 'Player 2 won!'}
+        }
         else {
-            setTimeout(restartPage, 2000, dialogOpen, dialog, main)
+            dialogOpen = true
+            checkWinner(playerPlay, opponentPlay.id)
+            setTimeout(restartPage, 2000, dialogOpen, dialog, main, playContainers)
         }
-
     }
 
-    function sortOpponent(op) {
-        return op[getRandomInt(3)]
-    }
 
-    function getResult(player, op) {
+    function checkWinner(p, op) {
 
-        if (result.hasChildNodes()) {
-            result.removeChild(result.firstChild)
+        if (p === op) {
+            result.innerHTML = "It's a tie"
         }
-
-        if (player == op) {
-            result.innerHTML = "<h1> It's a tie! </h1>"
+        
+        else if (p == 'paper' && op == 'rock' || p == 'rock' && op == 'scissor' || p == 'scissors' && op == 'paper') {
+            result.innerHTML = 'Player 1 wins!'
+            player.incrementPoints()
+            Score[0].innerHTML = player.points
         }
-
-        else if (player == 'paper' && op == 'scissor' || player == 'rock' && op == 'scissor' || player == 'scissor' && op == 'paper' || player == 'paper' && op == 'rock') {
-            playerScore += 1
-            Score[0].innerHTML = playerScore
-            result.innerHTML = "<h1> Player wins this round! </h1>"
-        }
-
+        
         else {
-            opponentScore += 1
-            Score[1].innerHTML = opponentScore
-            result.innerHTML = "<h1> Opponent wins this round! </h1>"
+            result.innerHTML = 'Player 2 wins!'
+            opponent.incrementPoints()
+            Score[1].innerHTML = opponent.points
+      
         }
 
     }
-
-
-}) 
+})
